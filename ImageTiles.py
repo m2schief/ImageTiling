@@ -2,7 +2,10 @@ from PIL import Image
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 import math
+from colorspacious import cspace_converter
 import random
+
+labConvert = cspace_converter('sRGB255', 'CIELab')
 
 class Tile:
     def __init__(self, dimensions, pixels, position):
@@ -11,7 +14,8 @@ class Tile:
         self._position = position
 
         reds, greens, blues = zip(*pixels)
-        self._averageColour = (np.average(reds), np.average(greens), np.average(blues))
+        self.averageColour = (np.average(reds), np.average(greens), np.average(blues))
+        self.averageLAB = labConvert(self.averageColour)
 
     def getDimensions(self):
         return self._dimensions
@@ -19,11 +23,9 @@ class Tile:
     def getPixels(self):
         return self._pixels
     
-    def getAverageColour(self):
-        return self._averageColour
-    
     def tileDistance(self, otherTile):
-        return round(math.dist(self._averageColour, otherTile.getAverageColour()), 3)
+        return round(math.dist(self.averageLAB, otherTile.averageLAB), 3)
+        #return round(math.dist(self.averageColour, otherTile.averageColour), 3)
     
     def updatePosition(self, newPosition):
         self._position = newPosition
@@ -75,7 +77,7 @@ class TiledImage:
 
         for tileY in range(self.yTileCount):
             for tileX in range(self.xTileCount):
-                tile = self.tiles[tileY * self.yTileCount + tileX]
+                tile = self.tiles[tileY * self.xTileCount + tileX]
                 left = tileX * self.tileWidth
                 top = tileY * self.tileHeight
 
@@ -95,7 +97,7 @@ class TiledImage:
         self.tiles = newTiles
 
     def constructImage(self, tileImage2):
-        #ensure images have identical total image and tile dimensions
+        #ensure images have identical tile dimensions and near aspect ratios
         otherImageTiles = tileImage2.tiles
 
         #create cost matrix
@@ -125,7 +127,6 @@ class TiledImage:
 
 
 
-
 def CroppedImageForTiling(im, xTileCount, yTileCount):
     width, height = im.size
 
@@ -137,13 +138,19 @@ def CroppedImageForTiling(im, xTileCount, yTileCount):
 
 
 
-monaLisa = Image.open('./sample_images/mona_lisa.jpg')
-tiledLisa = TiledImage(monaLisa, 50, 50)
+def TileSwapping(im1name, im2name, dimensions):
+    im1 = Image.open('./sample_images/' + im1name)
+    im2 = Image.open('./sample_images/' + im2name)
 
-vanGogh = Image.open('./sample_images/skeleton_gogh.jpg')
-tiledGogh = TiledImage(vanGogh, 50, 50)
+    tileIm1 = TiledImage(im1, dimensions[0], dimensions[1])
+    tileIm2 = TiledImage(im2, dimensions[0], dimensions[1])
 
-tiledGogh.replaceTiles(tiledLisa.constructImage(tiledGogh))
-tiledGogh.generateImageFromTiles()
-tiledLisa.image.save('./generated_images/Skeleton_from_MonaLisa.jpg')
-tiledGogh.image.save('./generated_images/MonaLisa_from_Skeleton.jpg')
+    tileIm1.replaceTiles(tileIm2.constructImage(tileIm1))
+    tileIm1.generateImageFromTiles()
+
+    tileIm1.image.save('./generated_images/' + im2name.split('.')[0] + '_from_' + im1name.split('.')[0] + '.jpg')
+    tileIm2.image.save('./generated_images/' + im1name.split('.')[0] + '_from_' + im2name.split('.')[0] + '.jpg')
+
+
+
+TileSwapping('monaLisa.jpg', 'skullGogh.jpg', (36, 54))

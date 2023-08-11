@@ -15,8 +15,8 @@ swapping tiles between two equal sized images to try and create similar results.
 The mapping of tiles between images can be reduced to a matching problem, which 
 can thus be solved by the Hungarian algorithm. 
 
-![Mona Lisa](./sample_images/Mona_Lisa.jpg)
-![Skull with Cigarette](./sample_images/skeleton_gogh.jpg)
+![Mona Lisa](./sample_images/monaLisa.jpg)
+![Skull with Cigarette](./sample_images/skullGogh.jpg)
 
-![Mona Lisa Rearranged, Resembling Skull](./generated_images/Skeleton_from_MonaLisa.jpg)
-![Skull Rearranged, Resembling Mona Lisa](./generated_images/MonaLisa_from_Skeleton.jpg)
+![Mona Lisa Rearranged, Resembling Skull](./generated_images/skullGogh_from_monaLisa.jpg)
+![Skull Rearranged, Resembling Mona Lisa](./generated_images/monaLisa_from_skullGogh.jpg)

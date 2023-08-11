@@ -145,5 +145,5 @@ tiledGogh = TiledImage(vanGogh, 50, 50)
 
 tiledGogh.replaceTiles(tiledLisa.constructImage(tiledGogh))
 tiledGogh.generateImageFromTiles()
-tiledLisa.image.save('./generated_images/Skeleton_from_MonaLisa.bmp')
-tiledGogh.image.save('./generated_images/MonaLisa_from_Skeleton.bmp')
+tiledLisa.image.save('./generated_images/Skeleton_from_MonaLisa.jpg')
+tiledGogh.image.save('./generated_images/MonaLisa_from_Skeleton.jpg')

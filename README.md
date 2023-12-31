@@ -5,7 +5,7 @@ produce a wide range of interesting results.
 
 Perhaps most simply, we can cut an image into a 5x5 set of tiles, and then 
 shuffle said tiles' locations:
-![Mona Lisa Slide Puzzle](./generated_images/MonaLisa_Shuffled.jpg)
+![Mona Lisa Slide Puzzle](./generated_images/MonaLisa_Shuffled.png)
 
 With the implemented tile functionality, such a result comes from a single 
 action of shuffling the values.
@@ -18,5 +18,5 @@ can thus be solved by the Hungarian algorithm.
 ![Mona Lisa](./sample_images/monaLisa.jpg)
 ![Skull with Cigarette](./sample_images/skullGogh.jpg)
 
-![Mona Lisa Rearranged, Resembling Skull](./generated_images/skullGogh_from_monaLisa.jpg)
-![Skull Rearranged, Resembling Mona Lisa](./generated_images/monaLisa_from_skullGogh.jpg)
+![Mona Lisa Rearranged, Resembling Skull](./generated_images/skullGogh_from_monaLisa.png)
+![Skull Rearranged, Resembling Mona Lisa](./generated_images/monaLisa_from_skullGogh.png)

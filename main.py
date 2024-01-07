@@ -17,8 +17,8 @@ def TileSwapping(im1, im2, tile_dimensions):
 
     cost_matrix = []
     # properly set all tile colours
-    m1_colours = [m1_tile.find_average_color() for m1_tile in m1._tiles]
-    m2_colours = [m2_tile.find_average_color() for m2_tile in m2._tiles]
+    m1_colours = [m1_tile.get_average_color() for m1_tile in m1._tiles]
+    m2_colours = [m2_tile.get_average_color() for m2_tile in m2._tiles]
 
     # Create the cost matrix using list comprehensions and numpy
     cost_matrix = np.array([[math.dist(tile1, tile2) for tile2 in m2_colours] for tile1 in m1_colours])
